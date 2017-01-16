@@ -9,14 +9,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#F1F1F2"
+    android:background="@color/colorActivityBackground"
     tools:context="com.example.kurapma.snhl.MainActivity">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FB6542"
+        android:background="@color/colorTabLayoutBackground"
         android:elevation="6dp"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
