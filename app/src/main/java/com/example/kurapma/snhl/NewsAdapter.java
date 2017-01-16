@@ -57,7 +57,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
         NewsData list =  items.get(position);
         holder.mTitleView.setText(list.getTitle().toUpperCase());
         holder.mTextView.setText(list.getName());
-        Picasso.with(context).load(list.getUrl()).resize(640,360 ).into(holder.mImageView);
+        Picasso.with(context).load(list.getUrl()).resize(760,480 ).into(holder.mImageView);
     }
 
     @Override
@@ -81,7 +81,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    //This test
                     Intent intent = new Intent(v.getContext(),SelectedNewsActivity.class);
                     intent.putExtra("ImageURL",items.get(getAdapterPosition()).getUrl().toString());
                     intent.putExtra("Title",items.get(getAdapterPosition()).getTitle().toString());
