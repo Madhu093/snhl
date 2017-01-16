@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Helping Hands</string>
+    <string name="sign_in">SIGN IN </string>
+    <string name="sign_out">Sign Out</string>
+    <string name="donate">Donate</string>
+    <string name="profile">Profile</string>
+    <string name="news">NEWS</string>
+    <string name="stories">STORIES</string>
+    <string name="donors">DONORS</string>
+    <string name="facebook_app_id">238971809879938</string>
+    <string name="fb_login_protocol_scheme">fb238971809879938</string>
+    <string name="facebook_provider_id">facebook_provider_id</string>
+</resources>

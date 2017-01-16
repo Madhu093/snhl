@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "495160134233",
+    "firebase_url": "https://snehahasthalu-ff078.firebaseio.com",
+    "project_id": "snehahasthalu-ff078",
+    "storage_bucket": "snehahasthalu-ff078.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495160134233:android:622484e4944e90d4",
+        "android_client_info": {
+          "package_name": "com.example.kurapma.snhl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495160134233-u3992p1t2hh6c7dg0h7lpdt19rk1jfmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kurapma.snhl",
+            "certificate_hash": "8F30B549CC5D398DAA84562F89D302E450600F90"
+          }
+        },
+        {
+          "client_id": "495160134233-u8dht5r1ubhjvhjbrqdva5v74c6rhhsf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNoMVKYMQnDXNNAUgRAGDio5dKJtHIG6g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "495160134233-u8dht5r1ubhjvhjbrqdva5v74c6rhhsf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
