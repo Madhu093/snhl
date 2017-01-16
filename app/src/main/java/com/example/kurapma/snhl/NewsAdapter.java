@@ -81,6 +81,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
+                    //This test
                     Intent intent = new Intent(v.getContext(),SelectedNewsActivity.class);
                     intent.putExtra("ImageURL",items.get(getAdapterPosition()).getUrl().toString());
                     intent.putExtra("Title",items.get(getAdapterPosition()).getTitle().toString());
