@@ -1,6 +1,8 @@
 package com.example.kurapma.snhl;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +22,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+
 /**
  * Created by kurapma on 1/12/17.
  */
@@ -32,6 +39,7 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
     private TextView tv_title, tv_text;
     private ImageView imageView;
     private String getImageURL, title, text;
+    private GetBitmap bitmap;
 
 
     @Override
@@ -41,11 +49,16 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
         tv_title = (TextView)findViewById(R.id.selected_news_title);
         tv_text = (TextView)findViewById(R.id.selected_news_text);
         imageView=(ImageView)findViewById(R.id.selected_news_image_view);
+        bitmap= new GetBitmap(this);
 
         if(getIntent().hasExtra("ImageURL")) {
             Intent intent = getIntent();
             getImageURL = intent.getStringExtra("ImageURL");
-            Picasso.with(getApplicationContext()).load(getImageURL).resize(720,360 ).into(imageView);
+            Bitmap imageBitmap = bitmap.getImage(getImageURL);
+            imageView.setImageBitmap(imageBitmap);
+
+            //Picasso.with(getApplicationContext()).load(getImageURL).resize(720,360 ).into(imageView);
+
         }
 
         if(getIntent().hasExtra("Title")) {

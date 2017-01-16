@@ -23,6 +23,10 @@ public class GetBitmap extends AsyncTask<Void,Void,Void> {
     private String[] urls;
     private ProgressDialog loading;
 
+    public GetBitmap(Activity context) {
+        this.context = context;
+    }
+
     public GetBitmap(Activity context, String[] urls){
         this.context = context;
         this.urls = urls;
@@ -48,12 +52,11 @@ public class GetBitmap extends AsyncTask<Void,Void,Void> {
         return null;
     }
 
-    private Bitmap getImage(String bitmapUrl){
+    public Bitmap getImage(String bitmapUrl){
         URL url;
         Bitmap image = null;
         try {
             url = new URL(bitmapUrl);
-            /*image = BitmapFactory.decodeStream(url.openConnection().getInputStream());*/
             InputStream in = url.openConnection().getInputStream();
             BufferedInputStream bis = new BufferedInputStream(in,1024*8);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
