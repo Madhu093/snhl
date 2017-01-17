@@ -75,25 +75,6 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-                try {
-                    AsyncTask.execute(new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              mFirebaseAuth.signOut();
-                                              LoginManager.getInstance().logOut();
-                                              Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                                          }
-                                      }
-                    );
-                } catch (Exception e) {
-
-                }
-                Intent launchSingInActivity = new Intent(PaymentActivity.this, MainActivity.class);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(launchSingInActivity);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

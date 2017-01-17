@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(getApplication());
 
-        // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
@@ -94,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
 
         if (mFirebaseUser == null) {
-            // Not signed in, launch the Sign In activity
             startActivity(new Intent(this, SignInActivity.class));
             finish();
             return;
@@ -111,6 +109,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        populateNavigationView();
     }
 
     @Override
@@ -153,29 +157,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case R.id.profile:
                 startActivity(new Intent(this, ProfileActivity.class));
                 return true;
-            case R.id.sign_out_menu:
 
-                try {
-                    AsyncTask.execute(new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              mFirebaseAuth.signOut();
-                                              LoginManager.getInstance().logOut();
-                                              Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                                          }
-                                      }
-                    );
-                } catch (Exception e) {
-
-                }
-                mFirebaseUser = null;
-                Intent launchSingInActivity = new Intent(MainActivity.this, MainActivity.class);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(launchSingInActivity);
-                return true;
             case R.id.payment_activity:
                 startActivity(new Intent(this, PaymentActivity.class));
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -201,30 +186,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(R.string.navigate);
-
-                if (mFirebaseUser == null) {
-
-                } else {
-                    String facebookUserId = "";
-                    String userName = "";
-                    String emailId = "";
-                    for (UserInfo profile : mFirebaseUser.getProviderData()) {
-                        if (profile.getProviderId().equals(getString(R.string.facebook_provider_id))) {
-                            facebookUserId = profile.getUid();
-                            userName = profile.getDisplayName();
-                            emailId = profile.getEmail();
-                            mPhotoURL = "https://graph.facebook.com/" + facebookUserId + "/picture?type=large";
-                        } else {
-                            mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
-                            mPhotoURL = mPhotoURL.replace("/s96-c/", "/s300-c/");
-                            userName = mFirebaseUser.getDisplayName();
-                            emailId = mFirebaseUser.getEmail();
-                        }
-                        Picasso.with(getApplicationContext()).load(mPhotoURL).into(mHeaderLogo);
-                        mHeaderTitle.setText(userName);
-                        mHeaderSubTitle.setText(emailId);
-                    }
-                }
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -238,39 +199,64 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Menu menu = navigationView.getMenu();
         mAuthenticateMenuItem = menu.findItem(R.id.logout);
 
-        mHeaderLogo = (ImageView) hView.findViewById(R.id.header_logo);
-        mHeaderTitle = (TextView) hView.findViewById(R.id.header_title);
-        mHeaderSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
+        mHeaderLogo = (ImageView) hView.findViewById(R.id.profile_logo);
+        mHeaderTitle = (TextView) hView.findViewById(R.id.profile_name);
+        mHeaderSubTitle = (TextView) hView.findViewById(R.id.profile_email);
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        int id = item.getItemId();
-        if (id == R.id.logout)
-        {
-            try {
-                AsyncTask.execute(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          mFirebaseAuth.signOut();
-                                          LoginManager.getInstance().logOut();
-                                          Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+        switch (item.getItemId()) {
+            case R.id.logout:
+                try {
+                    AsyncTask.execute(new Runnable() {
+                                          @Override
+                                          public void run() {
+                                              mFirebaseAuth.signOut();
+                                              LoginManager.getInstance().logOut();
+                                              Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                                          }
                                       }
-                                  }
-                );
-            } catch (Exception e) {
+                    );
+                } catch (Exception e) {
 
-            }
-            mFirebaseUser = null;
-            Intent launchSingInActivity = new Intent(MainActivity.this, MainActivity.class);
-            launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(launchSingInActivity);
-
+                }
+                mFirebaseUser = null;
+                Intent launchSingInActivity = new Intent(MainActivity.this, MainActivity.class);
+                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(launchSingInActivity);
+                return true;
         }
 
         return true;
+    }
+
+
+    private void populateNavigationView() {
+        if (mFirebaseUser == null) {
+
+        } else {
+            String facebookUserId = "";
+            String userName = "";
+            String emailId = "";
+            for (UserInfo profile : mFirebaseUser.getProviderData()) {
+                if (profile.getProviderId().equals(getString(R.string.facebook_provider_id))) {
+                    facebookUserId = profile.getUid();
+                    userName = profile.getDisplayName();
+                    emailId = profile.getEmail();
+                    mPhotoURL = "https://graph.facebook.com/" + facebookUserId + "/picture?type=large";
+                } else {
+                    mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
+                    userName = mFirebaseUser.getDisplayName();
+                    emailId = mFirebaseUser.getEmail();
+                }
+                Picasso.with(getApplicationContext()).load(mPhotoURL).into(mHeaderLogo);
+                mHeaderTitle.setText(userName);
+                mHeaderSubTitle.setText(emailId);
+            }
+        }
     }
 }

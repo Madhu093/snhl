@@ -56,9 +56,6 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
             getImageURL = intent.getStringExtra("ImageURL");
             Bitmap imageBitmap = bitmap.getImage(getImageURL);
             imageView.setImageBitmap(imageBitmap);
-
-            //Picasso.with(getApplicationContext()).load(getImageURL).resize(720,360 ).into(imageView);
-
         }
 
         if(getIntent().hasExtra("Title")) {
@@ -108,28 +105,6 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
         switch (item.getItemId()) {
             case R.id.profile:
                 startActivity(new Intent(this,ProfileActivity.class));
-                return true;
-            case R.id.sign_out_menu:
-
-                try {
-                    AsyncTask.execute(new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              mFirebaseAuth.signOut();
-                                              LoginManager.getInstance().logOut();
-                                              Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                                          }
-                                      }
-                    );
-                } catch (Exception e) {
-
-                }
-                mFirebaseUser = null;
-                Intent launchSingInActivity = new Intent(SelectedNewsActivity.this, MainActivity.class);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(launchSingInActivity);
                 return true;
             case R.id.payment_activity:
                 startActivity(new Intent(this, PaymentActivity.class));
