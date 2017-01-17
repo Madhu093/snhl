@@ -3,13 +3,23 @@ package com.example.kurapma.snhl;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -19,17 +29,28 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.squareup.picasso.Picasso;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
     private String TAG = "MainActivity";
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private GoogleApiClient mGoogleApiClient;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private ImageView mHeaderLogo;
+    private TextView mHeaderTitle;
+    private TextView mHeaderSubTitle;
+    private String mPhotoURL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initialize();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.news));
@@ -68,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this , this )
+                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
 
@@ -79,6 +100,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             return;
         } else {
             return;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -98,6 +129,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        actionBarDrawerToggle.syncState();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
@@ -106,9 +144,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         switch (item.getItemId()) {
             case R.id.profile:
-                startActivity(new Intent(this,ProfileActivity.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 return true;
             case R.id.sign_out_menu:
 
@@ -138,9 +181,69 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
 
+    private void initialize() {
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            public void onDrawerClosed(View view) {
+                getSupportActionBar().setTitle(R.string.app_name);
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(R.string.navigate);
+
+                if (mFirebaseUser == null) {
+
+                } else {
+                    String facebookUserId = "";
+                    String userName = "";
+                    String emailId = "";
+                    for (UserInfo profile : mFirebaseUser.getProviderData()) {
+                        if (profile.getProviderId().equals(getString(R.string.facebook_provider_id))) {
+                            facebookUserId = profile.getUid();
+                            userName = profile.getDisplayName();
+                            emailId = profile.getEmail();
+                            mPhotoURL = "https://graph.facebook.com/" + facebookUserId + "/picture?type=large";
+                        } else {
+                            mPhotoURL = mFirebaseUser.getPhotoUrl().toString();
+                            mPhotoURL = mPhotoURL.replace("/s96-c/", "/s300-c/");
+                            userName = mFirebaseUser.getDisplayName();
+                            emailId = mFirebaseUser.getEmail();
+                        }
+                        Picasso.with(getApplicationContext()).load(mPhotoURL).into(mHeaderLogo);
+                        mHeaderTitle.setText(userName);
+                        mHeaderSubTitle.setText(emailId);
+                    }
+                }
+                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        mHeaderLogo = (ImageView) hView.findViewById(R.id.header_logo);
+        mHeaderTitle = (TextView) hView.findViewById(R.id.header_title);
+        mHeaderSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        return true;
+    }
 }
