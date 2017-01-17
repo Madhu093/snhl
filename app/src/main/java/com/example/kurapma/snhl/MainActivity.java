@@ -154,10 +154,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         switch (item.getItemId()) {
-            case R.id.profile:
-                startActivity(new Intent(this, ProfileActivity.class));
-                return true;
-
             case R.id.payment_activity:
                 startActivity(new Intent(this, PaymentActivity.class));
 
@@ -193,8 +189,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View hView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View hView = navigationView.getHeaderView(0);
+        hView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+
+            }
+        });
 
         Menu menu = navigationView.getMenu();
         mAuthenticateMenuItem = menu.findItem(R.id.logout);

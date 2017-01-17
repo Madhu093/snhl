@@ -103,9 +103,6 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.profile:
-                startActivity(new Intent(this,ProfileActivity.class));
-                return true;
             case R.id.payment_activity:
                 startActivity(new Intent(this, PaymentActivity.class));
             default:
