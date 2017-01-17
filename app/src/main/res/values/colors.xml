@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorActivityBackground">#F1F1F2</color>
     <color name="colorRecyclerBackground">#F1F1F2</color>
-    <color name="colorCardDataBackground">#F1F1F2</color>
+    <color name="colorCardDataBackground">#F0EFEA</color>
     <color name="colorTextViewBackground">#F1F1F2</color>
     <color name="colorTabLayoutBackground">#FB6542</color>
+    <color name="selected_news_scroll_view">#F0EFEA</color>
 </resources>
