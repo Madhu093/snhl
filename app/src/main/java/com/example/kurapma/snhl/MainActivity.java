@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private GoogleApiClient mGoogleApiClient;
-    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ImageView mHeaderLogo;
     private TextView mHeaderTitle;
     private TextView mHeaderSubTitle;
     private String mPhotoURL = "";
+    private MenuItem mAuthenticateMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,6 +235,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         View hView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Menu menu = navigationView.getMenu();
+        mAuthenticateMenuItem = menu.findItem(R.id.logout);
+
         mHeaderLogo = (ImageView) hView.findViewById(R.id.header_logo);
         mHeaderTitle = (TextView) hView.findViewById(R.id.header_title);
         mHeaderSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
@@ -243,7 +246,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
         int id = item.getItemId();
+        if (id == R.id.logout)
+        {
+            try {
+                AsyncTask.execute(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          mFirebaseAuth.signOut();
+                                          LoginManager.getInstance().logOut();
+                                          Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                                      }
+                                  }
+                );
+            } catch (Exception e) {
+
+            }
+            mFirebaseUser = null;
+            Intent launchSingInActivity = new Intent(MainActivity.this, MainActivity.class);
+            launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(launchSingInActivity);
+
+        }
+
         return true;
     }
 }
