@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         switch (item.getItemId()) {
             case R.id.payment_activity:
                 startActivity(new Intent(this, PaymentActivity.class));
@@ -169,10 +168,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void initialize() {
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             public void onDrawerClosed(View view) {
@@ -192,11 +191,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         navigationView.setNavigationItemSelectedListener(this);
 
         View hView = navigationView.getHeaderView(0);
-        hView.setOnClickListener(new View.OnClickListener(){
+        hView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
 
             }
         });
