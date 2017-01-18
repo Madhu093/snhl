@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.appinvite.AppInvite;
+import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,6 +35,7 @@ import com.google.firebase.auth.UserInfo;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
+    private static final int REQUEST_INVITE = 500;
     private String TAG = "MainActivity";
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -43,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView mHeaderTitle;
     private TextView mHeaderSubTitle;
     private String mPhotoURL = "";
-    private MenuItem mAuthenticateMenuItem;
+    private MenuItem mAuthenticateMenuItem, mDonate;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +108,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -153,13 +156,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-            case R.id.payment_activity:
-                startActivity(new Intent(this, PaymentActivity.class));
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -177,6 +174,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(R.string.app_name);
+                int size = navigationView.getMenu().size();
+                for (int i = 0; i < size; i++) {
+                    navigationView.getMenu().getItem(i).setChecked(false);
+                }
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View hView = navigationView.getHeaderView(0);
@@ -203,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         Menu menu = navigationView.getMenu();
         mAuthenticateMenuItem = menu.findItem(R.id.logout);
+        mDonate = menu.findItem(R.id.donate);
 
         mHeaderLogo = (ImageView) hView.findViewById(R.id.profile_logo);
         mHeaderTitle = (TextView) hView.findViewById(R.id.profile_name);
@@ -214,6 +216,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.donate:
+                startActivity(new Intent(this, PaymentActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             case R.id.logout:
                 try {
                     AsyncTask.execute(new Runnable() {
@@ -239,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         return true;
     }
 
-
     private void populateNavigationView() {
         if (mFirebaseUser == null) {
 
@@ -264,4 +269,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         }
     }
+
 }

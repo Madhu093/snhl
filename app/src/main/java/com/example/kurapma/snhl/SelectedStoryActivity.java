@@ -77,12 +77,7 @@ public class SelectedStoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.payment_activity:
-                startActivity(new Intent(this, PaymentActivity.class));
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

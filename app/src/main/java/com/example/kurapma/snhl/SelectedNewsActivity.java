@@ -31,7 +31,7 @@ import java.net.URL;
  * Created by kurapma on 1/12/17.
  */
 
-public class SelectedNewsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class SelectedNewsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -46,25 +46,25 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_news);
-        tv_title = (TextView)findViewById(R.id.selected_news_title);
-        tv_text = (TextView)findViewById(R.id.selected_news_text);
-        imageView=(ImageView)findViewById(R.id.selected_news_image_view);
-        bitmap= new GetBitmap(this);
+        tv_title = (TextView) findViewById(R.id.selected_news_title);
+        tv_text = (TextView) findViewById(R.id.selected_news_text);
+        imageView = (ImageView) findViewById(R.id.selected_news_image_view);
+        bitmap = new GetBitmap(this);
 
-        if(getIntent().hasExtra("ImageURL")) {
+        if (getIntent().hasExtra("ImageURL")) {
             Intent intent = getIntent();
             getImageURL = intent.getStringExtra("ImageURL");
             Bitmap imageBitmap = bitmap.getImage(getImageURL);
             imageView.setImageBitmap(imageBitmap);
         }
 
-        if(getIntent().hasExtra("Title")) {
+        if (getIntent().hasExtra("Title")) {
             Intent intent = getIntent();
             title = intent.getStringExtra("Title");
             tv_title.setText(title.toUpperCase());
         }
 
-        if(getIntent().hasExtra("Text")) {
+        if (getIntent().hasExtra("Text")) {
             Intent intent = getIntent();
             text = intent.getStringExtra("Text");
             tv_text.setText(text);
@@ -73,7 +73,7 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this , this )
+                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
     }
@@ -102,12 +102,8 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.payment_activity:
-                startActivity(new Intent(this, PaymentActivity.class));
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     @Override

@@ -42,6 +42,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.google.android.gms:play-services-appinvite:10.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
