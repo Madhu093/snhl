@@ -212,6 +212,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 startActivity(new Intent(this, PaymentActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
+            case R.id.share:
+                share();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             case R.id.logout:
                 try {
                     AsyncTask.execute(new Runnable() {
@@ -260,6 +264,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 mHeaderSubTitle.setText(emailId);
             }
         }
+    }
+
+    private void share(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Here is the share content body";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
 }

@@ -8,10 +8,13 @@
             android:icon="@drawable/login_logo"
             android:title="@string/donate" />
         <item
+            android:id="@+id/share"
+            android:icon="@drawable/login_logo"
+            android:title="@string/share" />
+        <item
             android:id="@+id/logout"
             android:icon="@drawable/login_logo"
             android:title="@string/logout" />
-
     </group>
 
 </menu>
