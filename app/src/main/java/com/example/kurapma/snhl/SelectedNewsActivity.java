@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -40,6 +42,7 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
     private ImageView imageView;
     private String getImageURL, title, text;
     private GetBitmap bitmap;
+    private AdView mAdView;
 
 
     @Override
@@ -50,6 +53,10 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
         tv_text = (TextView) findViewById(R.id.selected_news_text);
         imageView = (ImageView) findViewById(R.id.selected_news_image_view);
         bitmap = new GetBitmap(this);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         if (getIntent().hasExtra("ImageURL")) {
             Intent intent = getIntent();
@@ -79,6 +86,23 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
     }
 
     @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+
+    @Override
     protected void onStop() {
         super.onStop();
     }
@@ -90,6 +114,9 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
 
     @Override
     protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
         super.onDestroy();
     }
 
