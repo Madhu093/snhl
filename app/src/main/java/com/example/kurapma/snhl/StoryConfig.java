@@ -3,10 +3,10 @@ package com.example.kurapma.snhl;
 import android.graphics.Bitmap;
 
 /**
- * Created by kurapma on 1/14/17.
+ * Created by kurapma on 1/18/17.
  */
 
-public class Config {
+public class StoryConfig {
     public static String[] names;
     public static String[] titles;
     public static String[] urls;
@@ -18,11 +18,10 @@ public class Config {
     public static final String TAG_TITLE = "title";
     public static final String TAG_JSON_ARRAY="result";
 
-    public Config(int i){
+    public StoryConfig(int i){
         titles = new String[i];
         names = new String[i];
         urls = new String[i];
         bitmaps = new Bitmap[i];
     }
-
 }

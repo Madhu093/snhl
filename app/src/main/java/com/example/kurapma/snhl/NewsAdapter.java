@@ -89,10 +89,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
                 }
             });
 
-            mCardView = (CardView) itemView.findViewById(R.id.card_view);
-            mTextView = (TextView) itemView.findViewById(R.id.tv_text);
-            mTitleView = (TextView) itemView.findViewById(R.id.tv_title);
-            mImageView = (ImageView) itemView.findViewById(R.id.iv_image);
+            mCardView = (CardView) itemView.findViewById(R.id.news_card_view);
+            mTextView = (TextView) itemView.findViewById(R.id.news_tv_text);
+            mTitleView = (TextView) itemView.findViewById(R.id.news_tv_title);
+            mImageView = (ImageView) itemView.findViewById(R.id.news_iv_image);
         }
     }
 

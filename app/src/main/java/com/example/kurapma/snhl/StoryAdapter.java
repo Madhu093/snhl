@@ -1,62 +1,89 @@
 package com.example.kurapma.snhl;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by kurapma on 1/11/17.
+ * Created by kurapma on 1/18/17.
  */
 
-public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.MyViewHolder>{
-
+public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     private Activity context;
+    private List<StoryData> items;
+    static final String TAG = "TAG_MyActivity";
 
-    ArrayList<StoryInformation> data;
-
-
-    public StoryAdapter(Activity context , ArrayList<StoryInformation> data){
+    public StoryAdapter(Activity context,String[] titles,String[] names, String[] urls, Bitmap[] images){
+        super();
         this.context = context;
-        this.data=data;
+        items = new ArrayList<>();
+        for(int i =0; i<names.length; i++){
+            StoryData item = new StoryData();
+            item.setName(names[i]);
+            item.setUrl(urls[i]);
+            item.setImage(images[i]);
+            item.setTitle(titles[i]);
+            items.add(item);
+        }
     }
 
-
     @Override
-    public StoryAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = context.getLayoutInflater() ;
-        View view=inflater.inflate(R.layout.story_image_item,parent,false);
-        MyViewHolder myViewHolder= new MyViewHolder(view);
-        return myViewHolder;
+    public StoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.story_card_item, parent, false);
+        int height= parent.getHeight()/2;
+        v.setMinimumHeight(height);
+        StoryAdapter.ViewHolder vh = new StoryAdapter.ViewHolder(v);
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(StoryAdapter.MyViewHolder holder, int position) {
-        /*holder.textview.setText(data.get(position).title);*/
-        Picasso.with(context).load(data.get(position).imageId).resize(1080,720 ).into(holder.imageView);
+    public void onBindViewHolder(StoryAdapter.ViewHolder holder, int position) {
+        StoryData list =  items.get(position);
+        Picasso.with(context).load(list.getUrl()).resize(760,480 ).into(holder.mImageView);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return items.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return (position);
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
+        public CardView mCardView;
+        public ImageView mImageView;
 
-        TextView textview;
-        ImageView imageView;
-        public MyViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            textview = (TextView) itemView.findViewById(R.id.text_below_image);
-            imageView = (ImageView) itemView.findViewById(R.id.image_view);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),SelectedNewsActivity.class);
+                    intent.putExtra("ImageURL",items.get(getAdapterPosition()).getUrl().toString());
+                    intent.putExtra("Title",items.get(getAdapterPosition()).getTitle().toString());
+                    intent.putExtra("Text",items.get(getAdapterPosition()).getName().toString());
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+            mCardView = (CardView) itemView.findViewById(R.id.story_card_view);
+            mImageView = (ImageView) itemView.findViewById(R.id.story_iv_image);
         }
     }
 }

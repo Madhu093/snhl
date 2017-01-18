@@ -2,7 +2,6 @@ package com.example.kurapma.snhl;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -47,7 +46,7 @@ public class GetBitmap extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... params) {
         for(int i=0; i<urls.length; i++){
-            Config.bitmaps[i] = getImage(urls[i]);
+            NewsConfig.bitmaps[i] = getImage(urls[i]);
         }
         return null;
     }
