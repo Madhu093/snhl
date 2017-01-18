@@ -144,13 +144,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -158,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
