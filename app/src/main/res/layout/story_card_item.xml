@@ -23,6 +23,19 @@
                 android:scaleType="fitXY">
             </ImageView>
 
+            <TextView
+                android:id="@+id/myImageViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/story_iv_image"
+                android:layout_alignTop="@id/story_iv_image"
+                android:layout_alignRight="@id/story_iv_image"
+                android:layout_alignBottom="@id/story_iv_image"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                android:text="Hello"
+                android:textColor="#000000" />
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

@@ -74,7 +74,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),SelectedNewsActivity.class);
+                    Intent intent = new Intent(v.getContext(),SelectedStoryActivity.class);
                     intent.putExtra("ImageURL",items.get(getAdapterPosition()).getUrl().toString());
                     intent.putExtra("Title",items.get(getAdapterPosition()).getTitle().toString());
                     intent.putExtra("Text",items.get(getAdapterPosition()).getName().toString());
