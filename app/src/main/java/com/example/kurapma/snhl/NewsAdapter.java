@@ -24,16 +24,16 @@ import java.util.List;
  * Created by kurapma on 1/11/17.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private Activity context;
     private List<NewsData> items;
     static final String TAG = "TAG_MyActivity";
 
-    public NewsAdapter(Activity context,String[] titles,String[] names, String[] urls, Bitmap[] images){
+    public NewsAdapter(Activity context, String[] titles, String[] names, String[] urls, Bitmap[] images) {
         super();
         this.context = context;
         items = new ArrayList<>();
-        for(int i =0; i<names.length; i++){
+        for (int i = 0; i < names.length; i++) {
             NewsData item = new NewsData();
             item.setName(names[i]);
             item.setUrl(urls[i]);
@@ -54,10 +54,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NewsData list =  items.get(position);
-        holder.mTitleView.setText(list.getTitle().toUpperCase());
-        holder.mTextView.setText(list.getName());
-        Picasso.with(context).load(list.getUrl()).resize(760,480 ).into(holder.mImageView);
+        NewsData list = items.get(position);
+        if (list != null) {
+            holder.mTitleView.setText(list.getTitle());
+            holder.mTextView.setText(list.getName());
+            Picasso.with(context).load(list.getUrl()).resize(760, 480).into(holder.mImageView);
+        } else {
+
+        }
     }
 
     @Override
@@ -71,7 +75,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         public CardView mCardView;
         public TextView mTextView;
         public TextView mTitleView;
@@ -80,11 +84,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),SelectedNewsActivity.class);
-                    intent.putExtra("ImageURL",items.get(getAdapterPosition()).getUrl().toString());
-                    intent.putExtra("Title",items.get(getAdapterPosition()).getTitle().toString());
-                    intent.putExtra("Text",items.get(getAdapterPosition()).getName().toString());
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), SelectedNewsActivity.class);
+                    intent.putExtra("ImageURL", items.get(getAdapterPosition()).getUrl().toString());
+                    intent.putExtra("Title", items.get(getAdapterPosition()).getTitle().toString());
+                    intent.putExtra("Text", items.get(getAdapterPosition()).getName().toString());
                     v.getContext().startActivity(intent);
                 }
             });
