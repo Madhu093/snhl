@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+
 /**
  * Created by kurapma on 1/18/17.
  */
@@ -21,6 +25,7 @@ public class SelectedStoryActivity extends AppCompatActivity {
     private ImageView imageView;
     private String getImageURL, title, text;
     private GetBitmap bitmap;
+    private AdView mAdView;
 
 
     @Override
@@ -31,6 +36,12 @@ public class SelectedStoryActivity extends AppCompatActivity {
         tv_text = (TextView) findViewById(R.id.selected_story_text);
         imageView = (ImageView) findViewById(R.id.selected_story_image_view);
         bitmap = new GetBitmap(this);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        if(mAdView.getAdSize() != null || mAdView.getAdUnitId() != null){
+            mAdView.loadAd(adRequest);
+        }
 
         if (getIntent().hasExtra("ImageURL")) {
             Intent intent = getIntent();
@@ -54,6 +65,31 @@ public class SelectedStoryActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
+
+    @Override
     protected void onStop() {
         super.onStop();
     }
@@ -61,11 +97,6 @@ public class SelectedStoryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
 }
