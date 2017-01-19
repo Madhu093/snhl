@@ -1,5 +1,6 @@
 package com.example.kurapma.snhl;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,11 +13,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -172,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
 
             public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle(R.string.navigate);
+                getSupportActionBar().setTitle(R.string.profile);
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -264,13 +268,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    private void share(){
+    private void share() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         String shareBody = "Here is the share content body";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivityForResult(Intent.createChooser(sharingIntent, "Share via"),REQUEST_INVITE);
+        startActivityForResult(Intent.createChooser(sharingIntent, "Share via"), REQUEST_INVITE);
         sendToFirebaseAnalytics();
     }
 
@@ -287,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE,
                         payload);*/
                 // Check how many invitations were sent.
-                Log.d(TAG, "Invitations sent: " );
+                Log.d(TAG, "Invitations sent: ");
             } else {
                 Bundle payload = new Bundle();
                 payload.putString(FirebaseAnalytics.Param.VALUE, "not sent");
@@ -300,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    private void sendToFirebaseAnalytics(){
+    private void sendToFirebaseAnalytics() {
         Bundle payload = new Bundle();
         payload.putString(FirebaseAnalytics.Param.VALUE, "sent");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE,
@@ -308,3 +312,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
 }
+
+

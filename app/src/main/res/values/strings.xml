@@ -13,7 +13,7 @@
     <string name="developer_info">Created By Madhu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="navigate">Navigate</string>
+    <string name="Profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="invite">Invite</string>
     <string name="share">Share</string>
