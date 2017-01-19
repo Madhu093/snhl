@@ -29,18 +29,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private List<NewsData> items;
     static final String TAG = "TAG_MyActivity";
 
-    public NewsAdapter(Activity context, String[] titles, String[] names, String[] urls, Bitmap[] images) {
-        super();
+    public NewsAdapter(List<NewsData> items,  Activity context) {
+        this.items = items;
         this.context = context;
-        items = new ArrayList<>();
-        for (int i = 0; i < names.length; i++) {
-            NewsData item = new NewsData();
-            item.setName(names[i]);
-            item.setUrl(urls[i]);
-            item.setImage(images[i]);
-            item.setTitle(titles[i]);
-            items.add(item);
-        }
     }
 
     @Override

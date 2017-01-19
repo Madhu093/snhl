@@ -24,18 +24,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     private List<StoryData> items;
     static final String TAG = "TAG_MyActivity";
 
-    public StoryAdapter(Activity context,String[] titles,String[] names, String[] urls, Bitmap[] images){
-        super();
+    public StoryAdapter(List<StoryData> items,  Activity context) {
+        this.items = items;
         this.context = context;
-        items = new ArrayList<>();
-        for(int i =0; i<names.length; i++){
-            StoryData item = new StoryData();
-            item.setName(names[i]);
-            item.setUrl(urls[i]);
-            item.setImage(images[i]);
-            item.setTitle(titles[i]);
-            items.add(item);
-        }
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.net.URL;
  * Created by kurapma on 1/14/17.
  */
 
-public class GetBitmap extends AsyncTask<Void,Void,Void> {
+public class GetBitmap {
 
     private Activity context;
     private String[] urls;
@@ -29,26 +29,6 @@ public class GetBitmap extends AsyncTask<Void,Void,Void> {
     public GetBitmap(Activity context, String[] urls){
         this.context = context;
         this.urls = urls;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        loading = ProgressDialog.show(context,"Loading","Please wait...",false,false);
-    }
-
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        loading.dismiss();
-    }
-
-    @Override
-    protected Void doInBackground(Void... params) {
-        for(int i=0; i<urls.length; i++){
-            NewsConfig.bitmaps[i] = getImage(urls[i]);
-        }
-        return null;
     }
 
     public Bitmap getImage(String bitmapUrl){
