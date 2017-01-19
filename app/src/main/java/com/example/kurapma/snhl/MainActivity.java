@@ -216,6 +216,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 startActivity(new Intent(this, PaymentActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
+            case R.id.NeedHelp:
+                startActivity(new Intent(this, PaymentActivity.class));
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             case R.id.share:
                 share();
                 drawerLayout.closeDrawer(GravityCompat.START);
