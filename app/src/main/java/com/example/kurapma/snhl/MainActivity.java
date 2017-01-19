@@ -1,6 +1,7 @@
 package com.example.kurapma.snhl;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -219,24 +221,35 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.logout:
-                try {
-                    AsyncTask.execute(new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              mFirebaseAuth.signOut();
-                                              LoginManager.getInstance().logOut();
-                                              Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                                          }
-                                      }
-                    );
-                } catch (Exception e) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.app_name);
+                builder.setMessage(R.string.confirm_logout);
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            navigationView.getMenu().findItem(R.id.logout).setChecked(false);
+                            AsyncTask.execute(new Runnable() {
+                                                  @Override
+                                                  public void run() {
+                                                      mFirebaseAuth.signOut();
+                                                      LoginManager.getInstance().logOut();
+                                                      Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                                                  }
+                                              }
+                            );
+                        } catch (Exception e) {
 
-                }
-                mFirebaseUser = null;
-                Intent launchSingInActivity = new Intent(MainActivity.this, MainActivity.class);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(launchSingInActivity);
+                        }
+                        mFirebaseUser = null;
+                        Intent launchSingInActivity = new Intent(MainActivity.this, MainActivity.class);
+                        launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        launchSingInActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(launchSingInActivity);
+                    }
+                });
+                builder.setNegativeButton(android.R.string.no, null);
+                builder.show();
                 return true;
         }
 
@@ -276,32 +289,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
         startActivityForResult(Intent.createChooser(sharingIntent, "Share via"), REQUEST_INVITE);
         sendToFirebaseAnalytics();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: requestCode=" + requestCode +
-                ", resultCode=" + resultCode);
-
-        if (requestCode == REQUEST_INVITE) {
-            if (resultCode == RESULT_OK) {
-                /*Bundle payload = new Bundle();
-                payload.putString(FirebaseAnalytics.Param.VALUE, "sent");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE,
-                        payload);*/
-                // Check how many invitations were sent.
-                Log.d(TAG, "Invitations sent: ");
-            } else {
-                Bundle payload = new Bundle();
-                payload.putString(FirebaseAnalytics.Param.VALUE, "not sent");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE,
-                        payload);
-                // Sending failed or it was canceled, show failure message to
-                // the user
-                Log.d(TAG, "Failed to send invitation.");
-            }
-        }
     }
 
     private void sendToFirebaseAnalytics() {
