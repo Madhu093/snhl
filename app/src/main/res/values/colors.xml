@@ -9,4 +9,5 @@
     <color name="colorTextViewBackground">#F1F1F2</color>
     <color name="colorTabLayoutBackground">#FB6542</color>
     <color name="selected_news_scroll_view">#F0EFEA</color>
+    <color name="donate_button_color">#EB8A44</color>
 </resources>
