@@ -5,11 +5,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/donate"
-            android:icon="@drawable/login_logo"
+            android:icon="@drawable/donate"
             android:title="@string/donate" />
         <item
             android:id="@+id/share"
-            android:icon="@drawable/login_logo"
+            android:icon="@drawable/invite"
             android:title="@string/share" />
         <item
             android:id="@+id/logout"
