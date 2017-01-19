@@ -1,7 +1,5 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.fragment;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,14 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.kurapma.snhl.rest.ApiClient;
+import com.example.kurapma.snhl.rest.ApiInterface;
+import com.example.kurapma.snhl.adapter.NewsAdapter;
+import com.example.kurapma.snhl.R;
+import com.example.kurapma.snhl.model.NewsData;
+import com.example.kurapma.snhl.model.NewsResponse;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 import retrofit2.Call;

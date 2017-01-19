@@ -1,4 +1,4 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.rest;
 
 /**
  * Created by kurapma on 1/19/17.

@@ -1,23 +1,16 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.model;
 
 import android.graphics.Bitmap;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
- * Created by kurapma on 1/12/17.
+ * Created by kurapma on 1/18/17.
  */
 
-public class NewsData {
-    @SerializedName("name")
+public class StoryData {
+
     private String name;
-
-    @SerializedName("title")
     private String title;
-
-    @SerializedName("url")
     private String url;
-
     private Bitmap image;
 
     public String getName() {

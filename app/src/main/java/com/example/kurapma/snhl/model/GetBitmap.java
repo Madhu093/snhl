@@ -1,4 +1,4 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.model;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

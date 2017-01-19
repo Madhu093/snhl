@@ -1,4 +1,4 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.model;
 
 import com.google.gson.annotations.SerializedName;
 

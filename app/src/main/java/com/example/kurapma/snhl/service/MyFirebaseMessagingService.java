@@ -1,4 +1,4 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.service;
 
 import android.util.Log;
 

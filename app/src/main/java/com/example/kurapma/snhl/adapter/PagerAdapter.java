@@ -1,4 +1,4 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.adapter;
 
 /**
  * Created by kurapma on 1/11/17.
@@ -7,6 +7,10 @@ package com.example.kurapma.snhl;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.example.kurapma.snhl.fragment.DonorFragment;
+import com.example.kurapma.snhl.fragment.NewsFragment;
+import com.example.kurapma.snhl.fragment.StoryFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;

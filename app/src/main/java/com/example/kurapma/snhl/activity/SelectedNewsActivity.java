@@ -1,26 +1,33 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kurapma.snhl.R;
+import com.example.kurapma.snhl.model.GetBitmap;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
- * Created by kurapma on 1/18/17.
+ * Created by kurapma on 1/12/17.
  */
 
-public class SelectedStoryActivity extends AppCompatActivity {
+public class SelectedNewsActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private GoogleApiClient mGoogleApiClient;
     private TextView tv_title, tv_text;
     private ImageView imageView;
     private String getImageURL, title, text;
@@ -31,17 +38,15 @@ public class SelectedStoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selected_story);
-        tv_title = (TextView) findViewById(R.id.selected_story_title);
-        tv_text = (TextView) findViewById(R.id.selected_story_text);
-        imageView = (ImageView) findViewById(R.id.selected_story_image_view);
+        setContentView(R.layout.activity_selected_news);
+        tv_title = (TextView) findViewById(R.id.selected_news_title);
+        tv_text = (TextView) findViewById(R.id.selected_news_text);
+        imageView = (ImageView) findViewById(R.id.selected_news_image_view);
         bitmap = new GetBitmap(this);
 
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        if(mAdView.getAdSize() != null || mAdView.getAdUnitId() != null){
-            mAdView.loadAd(adRequest);
-        }
+        mAdView.loadAd(adRequest);
 
         if (getIntent().hasExtra("ImageURL")) {
             Intent intent = getIntent();
@@ -62,6 +67,12 @@ public class SelectedStoryActivity extends AppCompatActivity {
             tv_text.setText(text);
         }
 
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API)
+                .build();
     }
 
     @Override
@@ -80,14 +91,6 @@ public class SelectedStoryActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
-        super.onDestroy();
-    }
-
 
     @Override
     protected void onStop() {
@@ -99,4 +102,16 @@ public class SelectedStoryActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }

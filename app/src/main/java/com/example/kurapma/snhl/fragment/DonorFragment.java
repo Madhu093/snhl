@@ -1,10 +1,12 @@
-package com.example.kurapma.snhl;
+package com.example.kurapma.snhl.fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.kurapma.snhl.R;
 
 /**
  * Created by kurapma on 1/12/17.
