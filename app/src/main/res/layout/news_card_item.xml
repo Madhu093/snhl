@@ -16,29 +16,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/news_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                android:gravity="center">
+            </TextView>
+
             <ImageView
                 android:id="@+id/news_iv_image"
                 android:layout_height="match_parent"
                 android:layout_width="150dp"
-                android:scaleType="fitXY">
+                android:scaleType="fitXY"
+                android:layout_below="@+id/news_tv_title">
             </ImageView>
 
-            <TextView
-                android:id="@+id/news_tv_title"
-                android:layout_toRightOf ="@+id/news_iv_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@android:color/black"
-                android:gravity="center">
-            </TextView>
 
             <TextView
                 android:id="@+id/news_tv_text"
                 android:layout_toRightOf ="@+id/news_iv_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/news_tv_title">
+                android:layout_below="@+id/news_tv_title">>
             </TextView>
 
 
