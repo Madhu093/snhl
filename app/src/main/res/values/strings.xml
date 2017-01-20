@@ -21,4 +21,6 @@
     <string name="share_body">Clear this and enter the text you want to</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="confirm_logout">Are you sure you want to log out?</string>
+    <string name="please_enter_amount">Please enter a valid amount</string>
+    <string name="amount_cannot_be_empty">Amount cannot be empty</string>
 </resources>

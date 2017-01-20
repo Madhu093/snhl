@@ -211,11 +211,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         switch (item.getItemId()) {
             case R.id.donate:
-                startActivity(new Intent(this, PaymentActivity.class));
+                startActivity(new Intent(this, DonateActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.assistance:
-                startActivity(new Intent(this, PaymentActivity.class));
+                startActivity(new Intent(this, DonateActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.share:

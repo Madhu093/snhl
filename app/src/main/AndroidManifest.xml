@@ -31,7 +31,7 @@
             android:screenOrientation="sensorPortrait"/>
 
         <activity
-            android:name=".activity.PaymentActivity"
+            android:name=".activity.DonateActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorPortrait"/>
 
@@ -47,6 +47,11 @@
 
         <activity
             android:name=".activity.SelectedStoryActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="sensorPortrait"/>
+
+        <activity
+            android:name=".activity.ConfirmationActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorPortrait"/>
 
