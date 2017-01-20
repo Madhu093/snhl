@@ -11,14 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.kurapma.snhl.R;
+import com.example.kurapma.snhl.model.quotes.Contents;
 import com.example.kurapma.snhl.model.PayPalConfig;
-import com.google.android.gms.auth.api.Auth;
+import com.example.kurapma.snhl.model.quotes.QuoteOfTheDay;
+import com.example.kurapma.snhl.model.quotes.Quotes;
+import com.example.kurapma.snhl.rest.ApiClient;
+import com.example.kurapma.snhl.rest.ApiInterface;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -29,17 +32,20 @@ import org.json.JSONException;
 
 import java.math.BigDecimal;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by kurapma on 1/11/17.
  */
 
 public class DonateActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     private Button paymentButton;
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
-    private GoogleApiClient mGoogleApiClient;
     private EditText editTextAmount;
+    private TextView tv_quote,tv_author;
     private String paymentAmount;
+
     //Paypal intent request code to track onActivityResult method
     public static final int PAYPAL_REQUEST_CODE = 123;
 
@@ -61,17 +67,37 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
 
         startService(intent);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API)
-                .build();
-
         paymentButton = (Button) findViewById(R.id.payment_button);
         paymentButton.setOnClickListener(this);
 
         editTextAmount = (EditText) findViewById(R.id.editTextAmount);
+        tv_quote = (TextView) findViewById(R.id.quote);
+        tv_author = (TextView) findViewById(R.id.tv_author);
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<QuoteOfTheDay> call = apiService.getQuoteOfTheDay("http://quotes.rest/qod.json");
+        call.enqueue(new Callback<QuoteOfTheDay>() {
+            @Override
+            public void onResponse(Call<QuoteOfTheDay> call, Response<QuoteOfTheDay> response) {
+                try {
+                    Contents contents = response.body().getContents();
+                    Quotes[] quotes = contents.getQuotes();
+                    String quote = quotes[0].getQuote();
+                    String author = quotes[0].getAuthor();
+                    tv_quote.setText(quote);
+                    tv_author.setText(author);
+                }catch (Exception e){
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<QuoteOfTheDay> call, Throwable t) {
+            }
+        });
     }
 
     @Override
@@ -92,9 +118,9 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if (isNotNullNotEmptyNotWhiteSpaceOnlyByJava(editTextAmount.getText().toString())){
+        if (isNotNullNotEmptyNotWhiteSpaceOnlyByJava(editTextAmount.getText().toString())) {
             getPayment();
-        }else {
+        } else {
             showAlertDialog();
         }
     }
@@ -131,8 +157,7 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public static boolean isNotNullNotEmptyNotWhiteSpaceOnlyByJava(
-            final String string)
-    {
+            final String string) {
         return string != null && !string.isEmpty() && !string.trim().isEmpty();
     }
 
