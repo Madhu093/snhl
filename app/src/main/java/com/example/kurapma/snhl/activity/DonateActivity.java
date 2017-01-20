@@ -20,6 +20,8 @@ import com.example.kurapma.snhl.model.quotes.QuoteOfTheDay;
 import com.example.kurapma.snhl.model.quotes.Quotes;
 import com.example.kurapma.snhl.rest.ApiClient;
 import com.example.kurapma.snhl.rest.ApiInterface;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -45,6 +47,7 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
     private EditText editTextAmount;
     private TextView tv_quote,tv_author;
     private String paymentAmount;
+    private AdView mAdView;
 
     //Paypal intent request code to track onActivityResult method
     public static final int PAYPAL_REQUEST_CODE = 123;
@@ -73,6 +76,12 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
         editTextAmount = (EditText) findViewById(R.id.editTextAmount);
         tv_quote = (TextView) findViewById(R.id.quote);
         tv_author = (TextView) findViewById(R.id.tv_author);
+
+        mAdView = (AdView) findViewById(R.id.donate_adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        if(mAdView.getAdSize() != null || mAdView.getAdUnitId() != null){
+            mAdView.loadAd(adRequest);
+        }
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
