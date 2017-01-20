@@ -42,7 +42,7 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseUser mFirebaseUser;
     private GoogleApiClient mGoogleApiClient;
     private EditText editTextAmount;
-    private BigDecimal paymentAmount;
+    private String paymentAmount;
     //Paypal intent request code to track onActivityResult method
     public static final int PAYPAL_REQUEST_CODE = 123;
 
@@ -95,44 +95,37 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-            getPayment();
+        getPayment();
     }
 
     private void getPayment() {
 
-        try {
-            paymentAmount = new BigDecimal(String.valueOf(editTextAmount.getText().toString()));
-        } catch (NumberFormatException e) {
-            paymentAmount = null;
-        }
+        //Getting the amount from editText
+        paymentAmount = editTextAmount.getText().toString();
 
         //Creating a paypalpayment
-        if (paymentAmount !=null) {
-            PayPalPayment payment = new PayPalPayment(paymentAmount, "USD", "Simplified Coding Fee",
-                    PayPalPayment.PAYMENT_INTENT_SALE);
-            //Creating Paypal Payment activity intent
-            Intent intent = new Intent(this, PaymentActivity.class);
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(paymentAmount)), "USD", "Simplified Coding Fee",
+                PayPalPayment.PAYMENT_INTENT_SALE);
 
-            //putting the paypal configuration to the intent
-            intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        //Creating Paypal Payment activity intent
+        Intent intent = new Intent(this, PaymentActivity.class);
 
-            //Puting paypal payment to the intent
-            intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+        //putting the paypal configuration to the intent
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
 
-            //Starting the intent activity for result
-            //the request code will be used on the method onActivityResult
-            startActivityForResult(intent, PAYPAL_REQUEST_CODE);
-        }else{
-            showAlertDialog();
-        }
+        //Puting paypal payment to the intent
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
 
+        //Starting the intent activity for result
+        //the request code will be used on the method onActivityResult
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
     }
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.amount_cannot_be_empty);
         builder.setMessage(R.string.please_enter_amount);
-        builder.setPositiveButton(android.R.string.ok,null);
+        builder.setPositiveButton(android.R.string.ok, null);
         builder.show();
     }
 
