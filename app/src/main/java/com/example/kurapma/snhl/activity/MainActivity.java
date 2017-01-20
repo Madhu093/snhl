@@ -215,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.assistance:
-                startActivity(new Intent(this, DonateActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.share:
