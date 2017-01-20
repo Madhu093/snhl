@@ -95,7 +95,11 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        getPayment();
+        if (isNotNullNotEmptyNotWhiteSpaceOnlyByJava(editTextAmount.getText().toString())){
+            getPayment();
+        }else {
+            showAlertDialog();
+        }
     }
 
     private void getPayment() {
@@ -127,6 +131,12 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
         builder.setMessage(R.string.please_enter_amount);
         builder.setPositiveButton(android.R.string.ok, null);
         builder.show();
+    }
+
+    public static boolean isNotNullNotEmptyNotWhiteSpaceOnlyByJava(
+            final String string)
+    {
+        return string != null && !string.isEmpty() && !string.trim().isEmpty();
     }
 
     @Override
