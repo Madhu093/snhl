@@ -32,7 +32,9 @@
                 android:layout_marginBottom="80dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
 
             <ProgressBar
                 android:id="@+id/amount_progress_bar"
@@ -58,7 +60,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:padding="2dp"
+                android:padding="0dp"
                 android:text="Donate"
                 android:gravity="center"/>
 

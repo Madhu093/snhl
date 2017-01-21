@@ -18,6 +18,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by kurapma on 1/12/17.
@@ -51,8 +52,9 @@ public class SelectedNewsActivity extends AppCompatActivity implements GoogleApi
         if (getIntent().hasExtra("ImageURL")) {
             Intent intent = getIntent();
             getImageURL = intent.getStringExtra("ImageURL");
-            Bitmap imageBitmap = bitmap.getImage(getImageURL);
-            imageView.setImageBitmap(imageBitmap);
+            Picasso.with(getApplicationContext()).load(getImageURL).resize(1080, 760).into(imageView);
+            /*Bitmap imageBitmap = bitmap.getImage(getImageURL);
+            imageView.setImageBitmap(imageBitmap);*/
         }
 
         if (getIntent().hasExtra("Title")) {

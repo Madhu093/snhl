@@ -9,7 +9,8 @@
     <color name="colorTextViewBackground">#F1F1F2</color>
     <color name="colorTabLayoutBackground">#FB6542</color>
     <color name="selected_news_scroll_view">#F0EFEA</color>
-    <color name="donate_button_color">#DE7A22</color>
+    <color name="donate_button_color">#FFBB00</color>
     <color name="donate_progress_bar_color">#008000</color>
     <color name="donate_progress_bar_baground_color">#FFC0CB</color>
+    <color name="white">#FFFFFF</color>
 </resources>
