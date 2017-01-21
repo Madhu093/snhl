@@ -18,7 +18,29 @@ public class NewsData {
     @SerializedName("url")
     private String url;
 
+    @SerializedName("amountNeeded")
+    private int amountNeeded;
+
+    @SerializedName("amountCollected")
+    private int amountCollected;
+
     private Bitmap image;
+
+    public int getAmountNeeded() {
+        return amountNeeded;
+    }
+
+    public void setAmountNeeded(int amountNeeded) {
+        this.amountNeeded = amountNeeded;
+    }
+
+    public int getAmountCollected() {
+        return amountCollected;
+    }
+
+    public void setAmountCollected(int amountCollected) {
+        this.amountCollected = amountCollected;
+    }
 
     public String getName() {
         return name;

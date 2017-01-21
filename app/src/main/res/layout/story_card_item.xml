@@ -23,8 +23,34 @@
                 android:scaleType="fitXY">
             </ImageView>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fund_info"
+                android:layout_alignBottom="@id/story_iv_image"
+                android:layout_alignRight="@id/story_iv_image"
+                android:layout_marginBottom="80dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"
+                android:text="$1k of $5k goal reached"/>
+
+            <ProgressBar
+                android:id="@+id/amount_progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/story_iv_image"
+                android:layout_alignRight="@id/story_iv_image"
+                android:progressDrawable="@drawable/green_progress"
+                android:layout_marginBottom="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:max="100"
+                android:indeterminate="false"/>
+
             <Button
-                android:id="@+id/donote_button"
+                android:id="@+id/donate_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/story_iv_image"

@@ -2,16 +2,46 @@ package com.example.kurapma.snhl.model;
 
 import android.graphics.Bitmap;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by kurapma on 1/18/17.
  */
 
 public class StoryData {
-
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("title")
     private String title;
+
+    @SerializedName("url")
     private String url;
+
+    @SerializedName("amountNeeded")
+    private int amountNeeded;
+
+    @SerializedName("amountCollected")
+    private int amountCollected;
+
     private Bitmap image;
+
+    public int getAmountCollected() {
+        return amountCollected;
+    }
+
+    public void setAmountCollected(int amountCollected) {
+        this.amountCollected = amountCollected;
+    }
+
+    public int getAmountNeeded() {
+        return amountNeeded;
+
+    }
+
+    public void setAmountNeeded(int amountNeeded) {
+        this.amountNeeded = amountNeeded;
+    }
 
     public String getName() {
         return name;

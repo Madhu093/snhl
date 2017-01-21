@@ -64,6 +64,7 @@ public class NewsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<NewsResponse>call, Throwable t) {
+
             }
         });
 
