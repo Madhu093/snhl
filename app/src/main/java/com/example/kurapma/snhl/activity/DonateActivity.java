@@ -9,9 +9,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kurapma.snhl.R;
 import com.example.kurapma.snhl.model.quotes.Contents;
@@ -33,6 +37,8 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,8 +50,8 @@ import retrofit2.Response;
 
 public class DonateActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     private Button paymentButton;
-    private EditText editTextAmount;
-    private TextView tv_quote,tv_author;
+    public EditText editTextAmount;
+    private TextView tv_quote, tv_author;
     private String paymentAmount;
     private AdView mAdView;
 
@@ -79,7 +85,7 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
 
         mAdView = (AdView) findViewById(R.id.donate_adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        if(mAdView.getAdSize() != null || mAdView.getAdUnitId() != null){
+        if (mAdView.getAdSize() != null || mAdView.getAdUnitId() != null) {
             mAdView.loadAd(adRequest);
         }
 
@@ -97,7 +103,7 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
                     String author = quotes[0].getAuthor();
                     tv_quote.setText(quote);
                     tv_author.setText(author);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -209,6 +215,8 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 }
+
+
 
 /*
 {

@@ -24,4 +24,15 @@
     <string name="confirm_logout">Are you sure you want to log out?</string>
     <string name="please_enter_amount">Please enter a valid amount</string>
     <string name="amount_cannot_be_empty">Amount cannot be empty</string>
+    <string name="payment_hint">Enter amount</string>
+
+    <string-array name="amount_array">
+        <item>Select amount</item>
+        <item>20</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+    </string-array>
+
 </resources>
