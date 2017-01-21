@@ -32,8 +32,7 @@
                 android:layout_marginBottom="80dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:textStyle="bold"
-                android:text="$1k of $5k goal reached"/>
+                android:textStyle="bold" />
 
             <ProgressBar
                 android:id="@+id/amount_progress_bar"
