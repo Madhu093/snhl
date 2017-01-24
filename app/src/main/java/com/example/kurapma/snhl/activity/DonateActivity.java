@@ -9,17 +9,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kurapma.snhl.R;
+import com.example.kurapma.snhl.model.Config;
 import com.example.kurapma.snhl.model.quotes.Contents;
-import com.example.kurapma.snhl.model.PayPalConfig;
 import com.example.kurapma.snhl.model.quotes.QuoteOfTheDay;
 import com.example.kurapma.snhl.model.quotes.Quotes;
 import com.example.kurapma.snhl.rest.ApiClient;
@@ -37,8 +33,6 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,7 +57,7 @@ public class DonateActivity extends AppCompatActivity implements View.OnClickLis
             // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
+            .clientId(Config.PAYPAL_CLIENT_ID);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

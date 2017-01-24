@@ -25,6 +25,11 @@
     <string name="please_enter_amount">Please enter a valid amount</string>
     <string name="amount_cannot_be_empty">Amount cannot be empty</string>
     <string name="payment_hint">Enter amount</string>
+    <string name="videos">Videos</string>
+    <string name="video_title_logo">NATIONAL GEOGRAPHIC</string>
+    <string name="video_btn_skip_intro">Skip Intro</string>
+    <string name="video_error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="getLocation">Get Location</string>
 
     <string-array name="amount_array">
         <item>Select amount</item>

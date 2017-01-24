@@ -53,6 +53,9 @@ dependencies {
 
     //paypal
     compile 'com.paypal.sdk:paypal-android-sdk:2.14.2'
+
+    //You tube
+    compile files('libs/YoutubeAndroidPlayerApi.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

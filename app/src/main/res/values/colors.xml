@@ -13,4 +13,6 @@
     <color name="donate_progress_bar_color">#008000</color>
     <color name="donate_progress_bar_baground_color">#FFC0CB</color>
     <color name="white">#FFFFFF</color>
+    <color name="videoShadow">#555555</color>
+    <color name="videoTitle">#777777</color>
 </resources>

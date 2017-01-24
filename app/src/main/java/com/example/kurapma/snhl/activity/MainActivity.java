@@ -20,8 +20,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kurapma.snhl.adapter.PagerAdapter;
 import com.example.kurapma.snhl.R;
+import com.example.kurapma.snhl.adapter.PagerAdapter;
+import com.example.kurapma.snhl.model.Config;
+import com.example.kurapma.snhl.model.LocationResponse;
+import com.example.kurapma.snhl.rest.ApiInterface;
+import com.example.kurapma.snhl.rest.LocationClient;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
@@ -33,6 +37,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.squareup.picasso.Picasso;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
     private static final int REQUEST_INVITE = 500;
@@ -214,6 +222,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 startActivity(new Intent(this, DonateActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
+            case R.id.experiment:
+                experiment();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            case R.id.videos:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(this, VideoActivity.class));
+                return true;
             case R.id.assistance:
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -297,6 +313,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         payload.putString(FirebaseAnalytics.Param.VALUE, "sent");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE,
                 payload);
+    }
+
+    private void experiment(){
+        ApiInterface locationClient =
+                LocationClient.getClient().create(ApiInterface.class);
+
+        Call<LocationResponse> call = locationClient.getLocation(Config.GOOGLE_API_KEY);
+        call.enqueue(new Callback<LocationResponse>() {
+            @Override
+            public void onResponse(Call<LocationResponse> call, Response<LocationResponse> response) {
+                System.out.println("response"+ response.body());
+            }
+
+            @Override
+            public void onFailure(Call<LocationResponse> call, Throwable t) {
+            }
+        });
     }
 
 }
