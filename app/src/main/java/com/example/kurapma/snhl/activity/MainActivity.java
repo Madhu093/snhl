@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void initialize() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         };
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -275,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void populateNavigationView() {
         if (mFirebaseUser == null) {
-
+            Log.d(TAG, "populateNavigationView: ");
         } else {
             String facebookUserId = "";
             String userName = "";

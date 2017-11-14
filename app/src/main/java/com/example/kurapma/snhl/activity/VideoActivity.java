@@ -8,10 +8,21 @@ import android.widget.Toast;
 
 import com.example.kurapma.snhl.R;
 import com.example.kurapma.snhl.model.Config;
+import com.example.kurapma.snhl.model.quotes.Contents;
+import com.example.kurapma.snhl.model.quotes.QuoteOfTheDay;
+import com.example.kurapma.snhl.model.quotes.Quotes;
+import com.example.kurapma.snhl.model.youTubePojo.ChannelResponse;
+import com.example.kurapma.snhl.rest.ApiClient;
+import com.example.kurapma.snhl.rest.ApiInterface;
+import com.example.kurapma.snhl.rest.YouTubeClient;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by kurapma on 1/23/17.
@@ -38,6 +49,22 @@ public class VideoActivity extends YouTubeBaseActivity implements
 
         // Initializing video player with developer key
         youTubeView.initialize(Config.GOOGLE_API_KEY, this);
+
+
+        /*ApiInterface apiService =
+                YouTubeClient.getClient().create(ApiInterface.class);
+
+        Call<ChannelResponse> call = apiService.getYouTubeChannelResponse(,);
+        call.enqueue(new Callback<ChannelResponse>() {
+            @Override
+            public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ChannelResponse> call, Throwable t) {
+            }
+        });*/
 
     }
 

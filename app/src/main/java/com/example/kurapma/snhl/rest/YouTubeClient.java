@@ -1,18 +1,16 @@
 package com.example.kurapma.snhl.rest;
 
-/**
- * Created by kurapma on 1/19/17.
- */
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Created by kurapma on 1/24/17.
+ */
 
-public class ApiClient {
-
-    public static final String BASE_URL = "https://snhl.000webhostapp.com/News/";
+public class YouTubeClient {
+    public static final String BASE_URL = "https://www.googleapis.com/youtube/v3/channels";
     private static Retrofit retrofit = null;
 
 
